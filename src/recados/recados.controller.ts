@@ -10,35 +10,37 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { RecadosService } from './recados.service';
+import { CreateRecadoDto } from './dto/create-recado.dto';
+import { UpdateRecadoDto } from './dto/update-recado.dto';
 
 @Controller('recados')
 export class RecadosController {
-  // @HttpCode(200) // para alterar, se eu quiser, o status automatico que vem ao usar o decorator
-  @HttpCode(HttpStatus.OK) //--> é possivel utilizar esse Enum
+  constructor(private readonly recadosService: RecadosService) {}
+
+  @HttpCode(HttpStatus.OK)
   @Get()
   findAll(@Query() pagination: any) {
-    const { limit = 10, offset = 0 } = pagination;
-    return `Limit=${limit} e Offset=${offset}`;
+    return this.recadosService.findAll();
   }
+
   @Get(':id')
-  // OU findOne(@Param('id') id: any)
-  findOne(@Param() id: any) {
-    return `Recado ${id}`;
+  findOne(@Param('id') id: string) {
+    return this.recadosService.findOne(id);
   }
+
   @Post()
-  // OU create(@Body('recado') body: any) --> eu posso escolher qual parametro pegar do body
-  create(@Body() body: any) {
-    return body;
+  create(@Body() createRecadoDto: CreateRecadoDto) {
+    return this.recadosService.create(createRecadoDto);
   }
+
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
-    return {
-      id,
-      ...body,
-    };
+  update(@Param('id') id: string, @Body() updateRecadoDto: UpdateRecadoDto) {
+    return this.recadosService.update(id, updateRecadoDto);
   }
+
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `Removendo recado ${id}`;
+    return this.recadosService.remove(id);
   }
 }
