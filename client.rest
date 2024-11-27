@@ -16,9 +16,7 @@ Content-Type: application/json
 {
     "texto": "3 NOVO Recado",
     "de": "Joana",
-    "para": "João",
-    "lido": false,
-    "data": "2024-08-08T11:32:39.624Z"
+    "para": "João"
 }
 
 ###
@@ -28,13 +26,12 @@ Content-Type: application/json
     {
     "texto": "ATUALIZAR Recado",
     "de": "Joana",
-    "para": "João",
-    "lido": false,
-    "data": "2024-08-08T11:32:39.624Z"
+    "para": "João"
+
     }
 
 ###
-DELETE {{baseUrl}}/recados/3
+DELETE {{baseUrl}}/recados/2
 ### APPController GetHello
 # @name AppControllerGetHello
 GET {{baseUrl}}

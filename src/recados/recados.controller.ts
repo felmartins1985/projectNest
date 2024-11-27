@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -26,7 +27,7 @@ export class RecadosController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.recadosService.findOne(id);
   }
 
@@ -36,12 +37,20 @@ export class RecadosController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRecadoDto: UpdateRecadoDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRecadoDto: UpdateRecadoDto,
+  ) {
     return this.recadosService.update(id, updateRecadoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
+    console.log(id, typeof id);
     return this.recadosService.remove(id);
   }
 }
+
+// O ParseIntPipe é um pipe embutido no NestJS que
+// é usado para transformar um parâmetro de string
+// em um número inteiro.
