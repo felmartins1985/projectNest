@@ -20,7 +20,8 @@ export class RecadosController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  findAll(@Query() pagination: any) {
+  // findAll(@Query() pagination: any) {
+  findAll() {
     return this.recadosService.findAll();
   }
 
