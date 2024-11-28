@@ -55,16 +55,13 @@ Content-Type: application/json
    "nome": "Luiz"
 }
 ###
-PATCH  {{baseUrl}}/pessoas/5
+PATCH  {{baseUrl}}/pessoas/2
 Content-Type: application/json
 
     {
-    "texto": "ATUALIZAR Recado",
-    "de": "Joana",
-    "para": "João"
-
+    "password": "654321",
+    "nome": "Joao"
     }
-
 
 
 ###
