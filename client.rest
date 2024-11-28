@@ -30,8 +30,29 @@ Content-Type: application/json
 
     }
 
+
+
 ###
 DELETE {{baseUrl}}/recados/4
+
+# PESSOAS
+### get all
+GET {{baseUrl}}/pessoas
+?limit=10
+&offset=10
+
+### get one
+GET {{baseUrl}}/pessoas/1
+
+###
+POST {{baseUrl}}/pessoas/
+Content-Type: application/json
+
+{
+   "email": "email@email.com",
+   "password": "123456",
+   "nome": "Luiz"
+}
 ### APPController GetHello
 # @name AppControllerGetHello
 GET {{baseUrl}}
