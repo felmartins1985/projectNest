@@ -16,17 +16,7 @@ export class RecadosService {
     @InjectRepository(Recado) // injeta o repositório/BD da entidade Recado
     private readonly recadoRepository: Repository<Recado>, // passo a ter acesso ao BD
   ) {}
-  private lastId = 1;
-  private recados: Recado[] = [
-    {
-      id: 1,
-      texto: 'Este é um recado de teste',
-      de: 'Joana',
-      para: 'João',
-      lido: false,
-      data: new Date(),
-    },
-  ];
+
   throwNotFoundError() {
     throw new NotFoundException('Recado não encontrado');
   }
