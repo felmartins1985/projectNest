@@ -15,18 +15,17 @@ Content-Type: application/json
 
 {
     "texto": "3 NOVO Recado",
-    "deId": 2,
-    "paraId": 2
+    "deId": 6,
+    "paraId": 10
 }
 
 ###
-PATCH  {{baseUrl}}/recados/5
+PATCH  {{baseUrl}}/recados/11
 Content-Type: application/json
 
     {
     "texto": "ATUALIZAR Recado",
-    "de": "Joana",
-    "para": "João"
+    "lido": true
 
     }
 
@@ -50,9 +49,9 @@ POST {{baseUrl}}/pessoas/
 Content-Type: application/json
 
 {
-   "email": "email2@email.com",
+   "email": "email1@email.com",
    "password": "123456",
-   "nome": "Luiz"
+   "nome": "Felipe"
 }
 ###
 PATCH  {{baseUrl}}/pessoas/2

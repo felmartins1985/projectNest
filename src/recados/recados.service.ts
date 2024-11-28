@@ -90,18 +90,11 @@ export class RecadosService {
     };
   }
   async update(id: number, updateRecadoDto: UpdateRecadoDto) {
-    const partialUpdateDto = {
-      lido: updateRecadoDto?.lido,
-      text: updateRecadoDto?.texto,
-    };
-    const recado = await this.recadoRepository.preload({
-      id,
-      ...partialUpdateDto,
-    });
-    if (!recado) {
-      this.throwNotFoundError();
-    }
-    return this.recadoRepository.save(recado);
+    const recado = await this.findOne(id);
+    recado.texto = updateRecadoDto?.texto ?? recado.texto;
+    recado.lido = updateRecadoDto?.lido ?? recado.lido;
+    await this.recadoRepository.save(recado);
+    return recado;
   }
   async remove(id: number) {
     const recado = await this.recadoRepository.findOneBy({
