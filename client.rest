@@ -35,6 +35,7 @@ Content-Type: application/json
 ###
 DELETE {{baseUrl}}/recados/4
 
+////////////////////////////////////////////////////////////////
 # PESSOAS
 ### get all
 GET {{baseUrl}}/pessoas
@@ -49,10 +50,30 @@ POST {{baseUrl}}/pessoas/
 Content-Type: application/json
 
 {
-   "email": "email@email.com",
+   "email": "email2@email.com",
    "password": "123456",
    "nome": "Luiz"
 }
+###
+PATCH  {{baseUrl}}/pessoas/5
+Content-Type: application/json
+
+    {
+    "texto": "ATUALIZAR Recado",
+    "de": "Joana",
+    "para": "João"
+
+    }
+
+
+
+###
+DELETE {{baseUrl}}/pessoas/5
+
+
+////////////////////////////////
+
+
 ### APPController GetHello
 # @name AppControllerGetHello
 GET {{baseUrl}}
