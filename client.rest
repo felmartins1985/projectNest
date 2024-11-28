@@ -7,7 +7,7 @@ GET {{baseUrl}}/recados
 &offset=10
 
 ### get one
-GET {{baseUrl}}/recados/1
+GET {{baseUrl}}/recados/10
 
 ###
 POST {{baseUrl}}/recados/
@@ -15,8 +15,8 @@ Content-Type: application/json
 
 {
     "texto": "3 NOVO Recado",
-    "de": "Joana",
-    "para": "João"
+    "deId": 2,
+    "paraId": 2
 }
 
 ###
