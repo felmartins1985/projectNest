@@ -46,7 +46,6 @@ export class RecadosController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
-    console.log(id, typeof id);
     return this.recadosService.remove(id);
   }
 }
