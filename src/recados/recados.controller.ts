@@ -18,6 +18,8 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
+// import { UrlParam } from 'src/common/params/utl-param.decorator';
+import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
 // import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
@@ -38,8 +40,12 @@ export class RecadosController {
   // @UseGuards(IsAdminGuard)
   // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
   @UseInterceptors(AddHeaderInterceptor)
-  // async findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
-  async findAll(@Query() paginationDto: PaginationDto) {
+  async findAll(
+    @Query() paginationDto: PaginationDto,
+    @ReqDataParam('headers') method: string,
+  ) {
+    console.log('RecadosController', method);
+    // async findAll(@Query() paginationDto: PaginationDto) {
     // console.log('RecadosController', req['user']);
     const recados = await this.recadosService.findAll(paginationDto);
     // throw new BadRequestException('MENSAGEM DE ERRO');
