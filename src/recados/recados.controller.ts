@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -36,10 +37,12 @@ export class RecadosController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
+  // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
+  @UseInterceptors(AddHeaderInterceptor)
   async findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
     console.log('RecadosController', req['user']);
     const recados = await this.recadosService.findAll(paginationDto);
+    throw new BadRequestException('MENSAGEM DE ERRO');
     // findAll() {
     return recados;
   }
