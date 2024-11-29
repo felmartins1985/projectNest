@@ -2,6 +2,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { ParseIntIdPipe } from './common/pipes/parse-int-id.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,7 +11,10 @@ async function bootstrap() {
     forbidNonWhitelisted: true, // retorna um erro se tiver uma chave que nao esta nas validações
     transform: false, // tenta transformar os tipos de dados de dados para as validações
 
-  }));
+  }),
+  new ParseIntIdPipe() // dessa forma funciona globalmente para todas as rotas
+  // se eu quiser colocar para um controller especifico, posso ir ao controller e colocar @UsePipes(ParseIntIdPipe) antes da classe
+);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
