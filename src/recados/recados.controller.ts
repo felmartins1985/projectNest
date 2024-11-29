@@ -6,24 +6,27 @@ import {
   HttpCode,
   HttpStatus,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
+  UseInterceptors
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 // import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 
 @Controller('recados')
 // @UsePipes(ParseIntIdPipe)
+// @UserInterceptors(AddHeaderInterceptor) --> o cabeçalho aparecia em todas as chamadas
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
 
   @HttpCode(HttpStatus.OK)
   @Get()
+  @UseInterceptors(AddHeaderInterceptor)
   async findAll(@Query() paginationDto: PaginationDto) {
     const recados = await this.recadosService.findAll(paginationDto);
     // findAll() {
@@ -51,6 +54,10 @@ export class RecadosController {
   }
 }
 
+
+function UserInterceptors(AddHeaderInterceptor: any): (target: typeof RecadosController) => void | typeof RecadosController {
+  throw new Error('Function not implemented.');
+}
 // O ParseIntPipe é um pipe embutido no NestJS que
 // é usado para transformar um parâmetro de string
 // em um número inteiro.
