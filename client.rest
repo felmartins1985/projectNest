@@ -5,10 +5,10 @@
 GET {{baseUrl}}/recados
 ?limit=2
 &offset=0
-
+Authorization: Bearer 123456
 ### get one
 GET {{baseUrl}}/recados/24
-
+ 
 ###
 POST {{baseUrl}}/recados/
 Content-Type: application/json

@@ -18,11 +18,13 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
+import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
 // import { ChangeDataInterceptor } from 'src/common/interceptors/change-data.interceptor';
 // import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 
 @Controller('recados')
+@UseInterceptors(AuthTokenInterceptor)
 // @UseInterceptors(SimpleCacheInterceptor)
 // @UseInterceptors(ChangeDataInterceptor)
 // @UsePipes(ParseIntIdPipe)
