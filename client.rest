@@ -7,7 +7,7 @@ GET {{baseUrl}}/recados
 &offset=0
 
 ### get one
-GET {{baseUrl}}/recados/-1
+GET {{baseUrl}}/recados/21
 
 ###
 POST {{baseUrl}}/recados/
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{baseUrl}}/recados/22
+DELETE {{baseUrl}}/recados/
 
 ////////////////////////////////////////////////////////////////
 # PESSOAS
