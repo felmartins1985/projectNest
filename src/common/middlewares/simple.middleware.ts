@@ -9,6 +9,7 @@ export class SimpleMiddleware implements NestMiddleware {
       req['user'] = {
         nome: 'Felipe',
         sobrenome: 'Martins',
+        role: 'admin',
       };
     }
     res.setHeader('CABECALHO', 'DO MIDDLEWARE');

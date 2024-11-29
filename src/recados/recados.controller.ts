@@ -11,6 +11,7 @@ import {
   Post,
   Query,
   Req,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
@@ -22,6 +23,7 @@ import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-conn
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 import { Request } from 'express';
+// import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
 // import { ChangeDataInterceptor } from 'src/common/interceptors/change-data.interceptor';
 // import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
@@ -37,12 +39,13 @@ export class RecadosController {
 
   @HttpCode(HttpStatus.OK)
   @Get()
+  // @UseGuards(IsAdminGuard)
   // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
   @UseInterceptors(AddHeaderInterceptor)
   async findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
     console.log('RecadosController', req['user']);
     const recados = await this.recadosService.findAll(paginationDto);
-    throw new BadRequestException('MENSAGEM DE ERRO');
+    // throw new BadRequestException('MENSAGEM DE ERRO');
     // findAll() {
     return recados;
   }
