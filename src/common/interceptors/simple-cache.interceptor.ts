@@ -1,5 +1,11 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
 import { of, tap } from 'rxjs';
+@Injectable()
 export class SimpleCacheInterceptor implements NestInterceptor {
   private readonly cache = new Map();
   async intercept(context: ExecutionContext, next: CallHandler<any>) {
