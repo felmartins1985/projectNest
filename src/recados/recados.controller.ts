@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -10,8 +9,6 @@ import {
   Patch,
   Post,
   Query,
-  Req,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
@@ -21,15 +18,14 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
-import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
-import { Request } from 'express';
+// import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
 // import { ChangeDataInterceptor } from 'src/common/interceptors/change-data.interceptor';
 // import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 
 @Controller('recados')
-@UseInterceptors(AuthTokenInterceptor)
+// @UseInterceptors(AuthTokenInterceptor)
 // @UseInterceptors(SimpleCacheInterceptor)
 // @UseInterceptors(ChangeDataInterceptor)
 // @UsePipes(ParseIntIdPipe)
@@ -42,8 +38,9 @@ export class RecadosController {
   // @UseGuards(IsAdminGuard)
   // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
   @UseInterceptors(AddHeaderInterceptor)
-  async findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
-    console.log('RecadosController', req['user']);
+  // async findAll(@Query() paginationDto: PaginationDto, @Req() req: Request) {
+  async findAll(@Query() paginationDto: PaginationDto) {
+    // console.log('RecadosController', req['user']);
     const recados = await this.recadosService.findAll(paginationDto);
     // throw new BadRequestException('MENSAGEM DE ERRO');
     // findAll() {
@@ -72,11 +69,11 @@ export class RecadosController {
   }
 }
 
-function UserInterceptors(
-  AddHeaderInterceptor: any,
-): (target: typeof RecadosController) => void | typeof RecadosController {
-  throw new Error('Function not implemented.');
-}
+// function UserInterceptors(
+//   AddHeaderInterceptor: any,
+// ): (target: typeof RecadosController) => void | typeof RecadosController {
+//   throw new Error('Function not implemented.');
+// }
 // O ParseIntPipe é um pipe embutido no NestJS que
 // é usado para transformar um parâmetro de string
 // em um número inteiro.

@@ -7,7 +7,7 @@ GET {{baseUrl}}/recados
 &offset=0
 Authorization: Bearer 123456
 ### get one
-GET {{baseUrl}}/recados/24
+GET {{baseUrl}}/recados/23
  
 ###
 POST {{baseUrl}}/recados/
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH  {{baseUrl}}/recados/14a
+PATCH  {{baseUrl}}/recados/23
 Content-Type: application/json
 
     {
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{baseUrl}}/recados/
+DELETE {{baseUrl}}/recados/23
 
 ////////////////////////////////////////////////////////////////
 # PESSOAS
@@ -42,7 +42,7 @@ GET {{baseUrl}}/pessoas
 &offset=10
 
 ### get one
-GET {{baseUrl}}/pessoas/1
+GET {{baseUrl}}/pessoas/10
 
 ###
 POST {{baseUrl}}/pessoas/

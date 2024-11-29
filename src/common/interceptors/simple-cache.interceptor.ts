@@ -13,7 +13,7 @@ export class SimpleCacheInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest();
     const url = request.url;
     if (this.cache.has(url)) {
-      console.log('esta no cache', url);
+      // console.log('esta no cache', url);
       return of(this.cache.get(url));
     }
     await new Promise(resolve => setTimeout(resolve, 3000));
