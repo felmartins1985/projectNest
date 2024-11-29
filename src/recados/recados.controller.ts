@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
@@ -18,9 +18,11 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
+import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
 // import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
 
 @Controller('recados')
+@UseInterceptors(SimpleCacheInterceptor)
 // @UsePipes(ParseIntIdPipe)
 // @UserInterceptors(AddHeaderInterceptor) --> o cabeçalho aparecia em todas as chamadas
 export class RecadosController {
@@ -57,8 +59,9 @@ export class RecadosController {
   }
 }
 
-
-function UserInterceptors(AddHeaderInterceptor: any): (target: typeof RecadosController) => void | typeof RecadosController {
+function UserInterceptors(
+  AddHeaderInterceptor: any,
+): (target: typeof RecadosController) => void | typeof RecadosController {
   throw new Error('Function not implemented.');
 }
 // O ParseIntPipe é um pipe embutido no NestJS que
