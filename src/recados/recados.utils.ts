@@ -6,3 +6,11 @@ export class RecadosUtils {
     return str.split('').reverse().join('');
   }
 }
+
+@Injectable()
+export class RecadosUtilsMock {
+  inverteString() {
+    // Luiz -> ziuL
+    return 'teste';
+  }
+}
