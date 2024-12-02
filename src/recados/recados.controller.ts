@@ -21,7 +21,13 @@ import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-conn
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
 import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
-import { SERVER_NAME } from 'src/common/constants/server-name.constant';
+import {
+  ONLY_LOWERCASE_LETTER_REGEX,
+  REMOVE_SPACES_REGEX,
+  SERVER_NAME,
+} from './recados.constant';
+import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
+import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter.regex';
 // import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
@@ -39,6 +45,10 @@ export class RecadosController {
     private readonly recadosService: RecadosService,
     @Inject(SERVER_NAME)
     private readonly serverName: string,
+    @Inject(REMOVE_SPACES_REGEX)
+    private readonly removeSpacesRegex: RemoveSpacesRegex,
+    @Inject(ONLY_LOWERCASE_LETTER_REGEX)
+    private readonly onlyLowerCaseLetterRegex: OnlyLowerCaseLetterRegex,
   ) {}
 
   @HttpCode(HttpStatus.OK)
@@ -51,6 +61,8 @@ export class RecadosController {
     @ReqDataParam('headers') method: string,
   ) {
     console.log('RecadosController', method);
+    console.log(this.removeSpacesRegex.execute(this.serverName));
+    console.log(this.onlyLowerCaseLetterRegex.execute(this.serverName));
     console.log(this.serverName);
     // async findAll(@Query() paginationDto: PaginationDto) {
     // console.log('RecadosController', req['user']);
