@@ -4,14 +4,13 @@ import { RecadosService } from './recados.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recado } from './entities/recado.entity';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
-import { RecadosUtils, RecadosUtilsMock } from './recados.utils';
+import { RecadosUtils } from './recados.utils';
+import { RegexFactory } from 'src/common/regex/regex.factory';
 import {
   ONLY_LOWERCASE_LETTER_REGEX,
   REMOVE_SPACES_REGEX,
-  SERVER_NAME,
 } from './recados.constant';
 import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
-import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter.regex';
 
 @Module({
   imports: [
@@ -21,22 +20,23 @@ import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter
   controllers: [RecadosController],
   providers: [
     RecadosService,
+    RecadosUtils,
+    RegexFactory,
     {
-      provide: RecadosUtils, // token
-      // useClass: new RecadosUtilsMock(), // valor a ser usado
-      useValue: new RecadosUtilsMock(), // valor a ser usado
-    },
-    {
-      provide: SERVER_NAME, // para injetar algum outro tipo de valor que nao seja uma classe
-      useValue: 'My name Is NestJS',
+      provide: REMOVE_SPACES_REGEX,
+      useFactory: (regexFactory: RegexFactory) => {
+        // meu codigo/logica
+        return regexFactory.create('RemoveSpacesRegex');
+      },
+      inject: [RegexFactory], // injetar dependencia na ordem
     },
     {
       provide: ONLY_LOWERCASE_LETTER_REGEX,
-      useClass: OnlyLowerCaseLetterRegex,
-    },
-    {
-      provide: REMOVE_SPACES_REGEX,
-      useClass: RemoveSpacesRegex,
+      useFactory: (regexFactory: RegexFactory) => {
+        // meu codigo/logica
+        return regexFactory.create('OnlyLowercaseLettersRegex');
+      },
+      inject: [RegexFactory], // injetar dependencia na ordem
     },
   ],
   exports: [
@@ -45,7 +45,6 @@ import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter
     //   useClass: RecadosUtils,
     // },
     RecadosUtils,
-    SERVER_NAME,
   ],
 })
 export class RecadosModule {}
