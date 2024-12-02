@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Inject,
   Param,
   Patch,
   Post,
@@ -20,6 +21,7 @@ import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-conn
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
 import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
+import { SERVER_NAME } from 'src/common/constants/server-name.constant';
 // import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
@@ -33,7 +35,11 @@ import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
 // @UsePipes(ParseIntIdPipe)
 // @UserInterceptors(AddHeaderInterceptor) --> o cabeçalho aparecia em todas as chamadas
 export class RecadosController {
-  constructor(private readonly recadosService: RecadosService) {}
+  constructor(
+    private readonly recadosService: RecadosService,
+    @Inject(SERVER_NAME)
+    private readonly serverName: string,
+  ) {}
 
   @HttpCode(HttpStatus.OK)
   @Get()
@@ -45,6 +51,7 @@ export class RecadosController {
     @ReqDataParam('headers') method: string,
   ) {
     console.log('RecadosController', method);
+    console.log(this.serverName);
     // async findAll(@Query() paginationDto: PaginationDto) {
     // console.log('RecadosController', req['user']);
     const recados = await this.recadosService.findAll(paginationDto);
