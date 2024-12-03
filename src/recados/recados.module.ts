@@ -10,7 +10,6 @@ import {
   ONLY_LOWERCASE_LETTER_REGEX,
   REMOVE_SPACES_REGEX,
 } from './recados.constant';
-import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
 
 @Module({
   imports: [
@@ -32,7 +31,10 @@ import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
     },
     {
       provide: ONLY_LOWERCASE_LETTER_REGEX,
-      useFactory: (regexFactory: RegexFactory) => {
+      useFactory: async (regexFactory: RegexFactory) => {
+        console.log('vou aguardar a promise abaixo ser resolvida.');
+        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.log('PRONTO: vou aguardar a promise abaixo ser resolvida.');
         // meu codigo/logica
         return regexFactory.create('OnlyLowercaseLettersRegex');
       },
