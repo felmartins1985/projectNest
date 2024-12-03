@@ -11,17 +11,13 @@ import recadosConfig from './recados.config';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class RecadosService {
-  private count = 0;
-
   constructor(
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
     @Inject(recadosConfig.KEY)
     private readonly recadosConfiguration: ConfigType<typeof recadosConfig>,
-  ) {
-    console.log(recadosConfiguration);
-  }
+  ) {}
 
   throwNotFoundError() {
     throw new NotFoundException('Recado não encontrado');

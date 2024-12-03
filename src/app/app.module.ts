@@ -5,7 +5,6 @@ import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { ConfigModule, ConfigType } from '@nestjs/config';
-import appConfig from './app.config';
 import globalConfig from 'src/global-config/global-config';
 import { GlobalConfigModule } from 'src/global-config/global-config.module';
 

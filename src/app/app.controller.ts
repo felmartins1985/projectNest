@@ -1,6 +1,5 @@
 import { Controller, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
-import appConfig from './app.config';
 import { ConfigType } from '@nestjs/config';
 import globalConfig from 'src/global-config/global-config';
 
