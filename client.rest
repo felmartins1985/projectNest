@@ -69,7 +69,14 @@ DELETE {{baseUrl}}/pessoas/10
 
 ////////////////////////////////
 
+### AUTH
+POST {{baseUrl}}/auth
+Content-Type: application/json
 
+{
+    "email": "felipe@email.com",
+    "password": "123456"
+}
 ### APPController GetHello
 # @name AppControllerGetHello
 GET {{baseUrl}}
