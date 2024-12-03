@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { Recado } from './entities/recado.entity';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
@@ -12,13 +7,17 @@ import { Repository } from 'typeorm';
 import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT })
 export class RecadosService {
+  private count = 0;
   constructor(
     @InjectRepository(Recado) // injeta o repositório/BD da entidade Recado
     private readonly recadoRepository: Repository<Recado>, // passo a ter acesso ao BD
     private readonly pessoasService: PessoasService,
-  ) {}
+  ) {
+    this.count++;
+    console.log('RecadosService foi instanciado ==>', this.count);
+  }
 
   throwNotFoundError() {
     throw new NotFoundException('Recado não encontrado');

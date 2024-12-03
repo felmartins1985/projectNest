@@ -4,26 +4,24 @@ import { AppService } from './app.service';
 import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
-// import { SimpleMiddleware } from 'src/common/middlewares/simple.middleware';
-// import { OutroMiddleware } from 'src/common/middlewares/outro.middleware';
-import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { MyExceptionFilter } from 'src/common/filter/my-exception.filter';
-import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
+import { ConfigModule } from '@nestjs/config';
+
 //
 
 @Module({
   imports: [
+    ConfigModule.forRoot(), // carrega um arquivo em que serao salvas a variaveis de ambiente
     RecadosModule,
     PessoasModule,
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      database: 'postgres',
-      password: 'gemeos1985',
-      autoLoadEntities: true, // carrega as entidades automaticamente sem precisar especificar
-      synchronize: true, // sincroniza com o BD. Nao deve ser usado em producao
+      type: process.env.DATABASE_TYPE as 'postgres',
+      host: process.env.DATABASE_HOST,
+      port: +process.env.DATABASE_PORT,
+      username: process.env.DATABASE_USERNAME,
+      database: process.env.DATABASE_DATABASE,
+      password: process.env.DATABASE_PASSWORD,
+      autoLoadEntities: Boolean(process.env.DATABASE_AUTOLOADENTITIES), // carrega as entidades automaticamente sem precisar especificar
+      synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE), // sincroniza com o BD. Nao deve ser usado em producao
     }),
   ],
   controllers: [AppController],

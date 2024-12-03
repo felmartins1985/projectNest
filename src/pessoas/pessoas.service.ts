@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  Scope,
 } from '@nestjs/common';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
@@ -9,12 +10,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Pessoa } from './entities/pessoa.entity';
 import { Repository } from 'typeorm';
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class PessoasService {
+  private count = 0;
   constructor(
     @InjectRepository(Pessoa)
     private readonly pessoaRepository: Repository<Pessoa>,
-  ) {}
+  ) {
+    this.count++;
+    console.log('PessoasService foi instanciado ==>', this.count);
+  }
   async create(createPessoaDto: CreatePessoaDto) {
     try {
       const pessoaData = {
@@ -43,6 +48,8 @@ export class PessoasService {
   }
 
   async findOne(id: number) {
+    this.count++;
+    console.log(`PessoasService: ${this.count}- findOne`);
     const pessoa = await this.pessoaRepository.findOne({ where: { id } });
     if (!pessoa) {
       throw new NotFoundException('Pessoa não encontrada');
@@ -66,7 +73,7 @@ export class PessoasService {
   }
 
   async remove(id: number) {
-    const pessoa = await this.pessoaRepository.findOneBy({ id });
+    const pessoa = await this.findOne(id);
     if (!pessoa) {
       throw new NotFoundException('Pessoa não encontrada');
     }
