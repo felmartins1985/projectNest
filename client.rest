@@ -54,7 +54,7 @@ Content-Type: application/json
    "nome": "Felipe"
 }
 ###
-PATCH  {{baseUrl}}/pessoas/2
+PATCH  {{baseUrl}}/pessoas/12
 Content-Type: application/json
 
     {
