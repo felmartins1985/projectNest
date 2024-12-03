@@ -10,14 +10,10 @@ import {
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
-import { RecadosUtils } from 'src/recados/recados.utils';
 
 @Controller('pessoas')
 export class PessoasController {
-  constructor(
-    private readonly pessoasService: PessoasService,
-    private readonly recadosUtils: RecadosUtils,
-  ) {}
+  constructor(private readonly pessoasService: PessoasService) {}
 
   @Post()
   create(@Body() createPessoaDto: CreatePessoaDto) {
@@ -26,7 +22,6 @@ export class PessoasController {
 
   @Get()
   findAll() {
-    console.log(this.recadosUtils.inverteString('Felipe'));
     return this.pessoasService.findAll();
   }
 

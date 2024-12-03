@@ -22,13 +22,17 @@ import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
 import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
 import {
-  ONLY_LOWERCASE_LETTER_REGEX,
-  REMOVE_SPACES_REGEX,
-} from './recados.constant';
-import { RecadosUtils } from './recados.utils';
-import { RegexProtocol } from 'src/common/regex/regex.protocol';
-import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
-import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter.regex';
+  MY_DYNAMIC_CONFIG,
+  MyDynamicModuleConfigs,
+} from 'src/my-dinamic/my-dynamic.module';
+// import {
+//   ONLY_LOWERCASE_LETTER_REGEX,
+//   REMOVE_SPACES_REGEX,
+// } from './recados.constant';
+// import { RecadosUtils } from './recados.utils';
+// import { RegexProtocol } from 'src/common/regex/regex.protocol';
+// import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
+// import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter.regex';
 // import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 // import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 // import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
@@ -44,10 +48,12 @@ import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter
 export class RecadosController {
   constructor(
     private readonly recadosService: RecadosService,
-    @Inject(REMOVE_SPACES_REGEX)
-    private readonly removeSpacesRegex: RemoveSpacesRegex,
-    @Inject(ONLY_LOWERCASE_LETTER_REGEX)
-    private readonly onlyLowerCaseLettersRegex: OnlyLowerCaseLetterRegex,
+    // @Inject(REMOVE_SPACES_REGEX)
+    // private readonly removeSpacesRegex: RemoveSpacesRegex,
+    // @Inject(ONLY_LOWERCASE_LETTER_REGEX)
+    // private readonly onlyLowerCaseLettersRegex: OnlyLowerCaseLetterRegex,
+    @Inject(MY_DYNAMIC_CONFIG)
+    private readonly myDynamicConfig: MyDynamicModuleConfigs,
   ) {}
 
   @HttpCode(HttpStatus.OK)
@@ -62,12 +68,12 @@ export class RecadosController {
     console.log('RecadosController', method);
     // async findAll(@Query() paginationDto: PaginationDto) {
     // console.log('RecadosController', req['user']);
-    console.log(this.removeSpacesRegex.execute('REMOVE OS ESPACOS'));
-    console.log(
-      this.onlyLowerCaseLettersRegex.execute(
-        'REMOVE OS ESPACOS letra minuscula',
-      ),
-    );
+    // console.log(this.removeSpacesRegex.execute('REMOVE OS ESPACOS'));
+    // console.log(
+    //   this.onlyLowerCaseLettersRegex.execute(
+    //     'REMOVE OS ESPACOS letra minuscula',
+    //   ),
+    // );
     const recados = await this.recadosService.findAll(paginationDto);
     // throw new BadRequestException('MENSAGEM DE ERRO');
     // findAll() {

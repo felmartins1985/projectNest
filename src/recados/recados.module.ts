@@ -5,42 +5,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recado } from './entities/recado.entity';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { RecadosUtils } from './recados.utils';
-import { RegexFactory } from 'src/common/regex/regex.factory';
-import {
-  ONLY_LOWERCASE_LETTER_REGEX,
-  REMOVE_SPACES_REGEX,
-} from './recados.constant';
+import { MyDynamicModule } from 'src/my-dinamic/my-dynamic.module';
+// import { RegexFactory } from 'src/common/regex/regex.factory';
+// import {
+//   ONLY_LOWERCASE_LETTER_REGEX,
+//   REMOVE_SPACES_REGEX,
+// } from './recados.constant';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Recado]),
-    forwardRef(() => PessoasModule), // dependencia circular --> é quando um modula importa um modulo e vice-versa
+    forwardRef(() => PessoasModule),
+    // dependencia circular --> é quando um modula importa um modulo e vice-versa
+    MyDynamicModule.register({
+      apiKey: 'API KEY 123',
+      apiUrl: 'http://localhost:3000',
+    }),
   ],
   controllers: [RecadosController],
-  providers: [
-    RecadosService,
-    RecadosUtils,
-    RegexFactory,
-    {
-      provide: REMOVE_SPACES_REGEX,
-      useFactory: (regexFactory: RegexFactory) => {
-        // meu codigo/logica
-        return regexFactory.create('RemoveSpacesRegex');
-      },
-      inject: [RegexFactory], // injetar dependencia na ordem
-    },
-    {
-      provide: ONLY_LOWERCASE_LETTER_REGEX,
-      useFactory: async (regexFactory: RegexFactory) => {
-        console.log('vou aguardar a promise abaixo ser resolvida.');
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        console.log('PRONTO: vou aguardar a promise abaixo ser resolvida.');
-        // meu codigo/logica
-        return regexFactory.create('OnlyLowercaseLettersRegex');
-      },
-      inject: [RegexFactory], // injetar dependencia na ordem
-    },
-  ],
+  providers: [RecadosService, RecadosUtils],
   exports: [
     // {
     //   provide: RecadosUtils,
