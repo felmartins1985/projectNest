@@ -5,7 +5,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Inject,
   Param,
   Patch,
   Post,
@@ -21,10 +20,6 @@ import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-conn
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
 import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
-import {
-  MY_DYNAMIC_CONFIG,
-  MyDynamicModuleConfigs,
-} from 'src/my-dinamic/my-dynamic.module';
 // import {
 //   ONLY_LOWERCASE_LETTER_REGEX,
 //   REMOVE_SPACES_REGEX,
@@ -52,8 +47,6 @@ export class RecadosController {
     // private readonly removeSpacesRegex: RemoveSpacesRegex,
     // @Inject(ONLY_LOWERCASE_LETTER_REGEX)
     // private readonly onlyLowerCaseLettersRegex: OnlyLowerCaseLetterRegex,
-    @Inject(MY_DYNAMIC_CONFIG)
-    private readonly myDynamicConfig: MyDynamicModuleConfigs,
   ) {}
 
   @HttpCode(HttpStatus.OK)

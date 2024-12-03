@@ -18,7 +18,7 @@ export class PessoasService {
     private readonly pessoaRepository: Repository<Pessoa>,
   ) {
     this.count++;
-    console.log('PessoasService foi instanciado ==>', this.count);
+    // console.log('PessoasService foi instanciado ==>', this.count);
   }
   async create(createPessoaDto: CreatePessoaDto) {
     try {
@@ -49,7 +49,7 @@ export class PessoasService {
 
   async findOne(id: number) {
     this.count++;
-    console.log(`PessoasService: ${this.count}- findOne`);
+    // console.log(`PessoasService: ${this.count}- findOne`);
     const pessoa = await this.pessoaRepository.findOne({ where: { id } });
     if (!pessoa) {
       throw new NotFoundException('Pessoa não encontrada');

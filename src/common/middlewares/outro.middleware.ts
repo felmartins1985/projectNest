@@ -13,7 +13,7 @@ export class OutroMiddleware implements NestMiddleware {
     }
     res.setHeader('CABECALHO', 'DO MIDDLEWARE');
     next();
-    console.log('Depois do proximo middleware - Outro');
+    // console.log('Depois do proximo middleware - Outro');
     //terminando a cadeia de chamadas
     // return res.status(404).send({
     //   message: 'não encontrado',

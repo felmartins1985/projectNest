@@ -9,7 +9,7 @@ export const MY_DYNAMIC_CONFIG = 'MY_DYNAMIC_CONFIG';
 @Module({})
 export class MyDynamicModule {
   static register(configs: MyDynamicModuleConfigs): DynamicModule {
-    console.log('configs', configs);
+    // console.log('configs', configs);
     return {
       module: MyDynamicModule,
       imports: [],

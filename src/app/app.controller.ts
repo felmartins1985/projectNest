@@ -1,12 +1,24 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Inject } from '@nestjs/common';
 import { AppService } from './app.service';
+import appConfig from './app.config';
+import { ConfigType } from '@nestjs/config';
 
-@Controller()
+@Controller('home') // /home
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    @Inject(appConfig.KEY)
+    private readonly appConfiguration: ConfigType<typeof appConfig>,
+  ) {}
 
-  @Get()
+  // @Get('hello')
   getHello(): string {
-    return this.appService.getHello();
+    const retorno = 'Retorno.';
+    return retorno;
+  }
+
+  // @Get('exemplo')
+  exemplo() {
+    return this.appService.solucionaExemplo();
   }
 }
