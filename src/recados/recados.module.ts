@@ -6,6 +6,7 @@ import { Recado } from './entities/recado.entity';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { RecadosUtils } from './recados.utils';
 import { MyDynamicModule } from 'src/my-dinamic/my-dynamic.module';
+import { ConfigModule } from '@nestjs/config';
 // import { RegexFactory } from 'src/common/regex/regex.factory';
 // import {
 //   ONLY_LOWERCASE_LETTER_REGEX,
@@ -14,6 +15,7 @@ import { MyDynamicModule } from 'src/my-dinamic/my-dynamic.module';
 
 @Module({
   imports: [
+    ConfigModule,
     TypeOrmModule.forFeature([Recado]),
     forwardRef(() => PessoasModule),
     // dependencia circular --> é quando um modula importa um modulo e vice-versa

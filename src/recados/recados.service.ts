@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class RecadosService {
@@ -14,9 +15,10 @@ export class RecadosService {
     @InjectRepository(Recado) // injeta o repositório/BD da entidade Recado
     private readonly recadoRepository: Repository<Recado>, // passo a ter acesso ao BD
     private readonly pessoasService: PessoasService,
+    private readonly configService: ConfigService, // serve para pegar as variaveis de ambiente do .env
   ) {
-    this.count++;
-    console.log('RecadosService foi instanciado ==>', this.count);
+    const databaseUserName = this.configService.get('DATABASE_USERNAME');
+    console.log(`Usuário do BD: ${databaseUserName}`);
   }
 
   throwNotFoundError() {
