@@ -5,12 +5,26 @@ import { RecadosModule } from 'src/recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { ConfigModule } from '@nestjs/config';
-
+import * as Joi from '@hapi/joi';
 //
 
 @Module({
+  // carrega um arquivo em que serao salvas a variaveis de ambiente
+  //   ConfigModule.forRoot({}) ==> pega o .env na raiz do projeto
   imports: [
-    ConfigModule.forRoot(), // carrega um arquivo em que serao salvas a variaveis de ambiente
+    ConfigModule.forRoot({
+      envFilePath: '.env', // caso o arquivo tenha outro nome ou nao esteja na raiz do projeto
+      validationSchema: Joi.object({
+        DATABASE_TYPE: Joi.required(),
+        DATABASE_HOST: Joi.required(),
+        DATABASE_PORT: Joi.number().default(5432),
+        DATABASE_USERNAME: Joi.required(),
+        DATABASE_DATABASE: Joi.required(),
+        DATABASE_PASSWORD: Joi.required(),
+        DATABASE_AUTOLOADENTITIES: Joi.number().min(0).max(1).default(0),
+        DATABASE_SYNCHRONIZE: Joi.number().min(0).max(1).default(0),
+      }),
+    }),
     RecadosModule,
     PessoasModule,
     TypeOrmModule.forRoot({
