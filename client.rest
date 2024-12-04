@@ -1,6 +1,5 @@
 @baseUrl = http://localhost:3000
-
-# RECADOS
+@authToken={{authenticate.response.body.accessToken}}
 ### get all
 GET {{baseUrl}}/recados
 ?limit=2
@@ -40,7 +39,7 @@ DELETE {{baseUrl}}/recados/23
 GET {{baseUrl}}/pessoas
 ?limit=10
 &offset=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJlbWFpbCI6ImVtQGVtYWlsLmNvbSIsImlhdCI6MTczMzMxODM0MywiZXhwIjoxNzMzMzIxOTQzLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAifQ.32gKMmaNGx1adyxz3p09EAsot2eSUZfBpZIUCbVmpOg
+Authorization: Bearer {{authToken}}
 ### get one
 GET {{baseUrl}}/pessoas/10
 
@@ -67,9 +66,10 @@ Content-Type: application/json
 DELETE {{baseUrl}}/pessoas/10
 
 
-////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 ### AUTH
+# @name authenticate
 POST {{baseUrl}}/auth
 Content-Type: application/json
 

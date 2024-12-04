@@ -20,7 +20,7 @@ export class AuthTokenGuard implements CanActivate {
     const request = context.switchToHttp().getRequest<Request>();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      throw new UnauthorizedException('Nâo Logado');
+      throw new UnauthorizedException('Não Logado');
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
@@ -42,3 +42,11 @@ export class AuthTokenGuard implements CanActivate {
     return authorization.split(' ')[1];
   }
 }
+
+// Para que Serve o Guard:
+// Proteção de Rotas: O AuthTokenGuard é usado para proteger rotas,
+// garantindo que apenas solicitações autenticadas com um token JWT válido possam acessar essas rotas.
+// Verificação de Autenticação: Verifica se a solicitação contém um token JWT válido e, se for válido,
+// permite que a solicitação prossiga.
+// Injeção de Dependências: Usa o JwtService para verificar o token JWT e injeta a configuração
+// JWT (jwtConfiguration) para obter o segredo usado na verificação.
