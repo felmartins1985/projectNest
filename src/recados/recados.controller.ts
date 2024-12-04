@@ -9,6 +9,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
@@ -20,34 +21,13 @@ import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-conn
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
 import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
-// import {
-//   ONLY_LOWERCASE_LETTER_REGEX,
-//   REMOVE_SPACES_REGEX,
-// } from './recados.constant';
-// import { RecadosUtils } from './recados.utils';
-// import { RegexProtocol } from 'src/common/regex/regex.protocol';
-// import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
-// import { OnlyLowerCaseLetterRegex } from 'src/common/regex/only-lowercase-letter.regex';
-// import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
-// import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
-// import { SimpleCacheInterceptor } from 'src/common/interceptors/simple-cache.interceptor';
-// import { ChangeDataInterceptor } from 'src/common/interceptors/change-data.interceptor';
-// import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
+import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
+import { TokenPayloadParam } from 'src/auth/params/token-payload.params';
+import { TokenPayloadDto } from 'src/common/dto/token-payload.dto';
 
 @Controller('recados')
-// @UseInterceptors(AuthTokenInterceptor)
-// @UseInterceptors(SimpleCacheInterceptor)
-// @UseInterceptors(ChangeDataInterceptor)
-// @UsePipes(ParseIntIdPipe)
-// @UserInterceptors(AddHeaderInterceptor) --> o cabeçalho aparecia em todas as chamadas
 export class RecadosController {
-  constructor(
-    private readonly recadosService: RecadosService,
-    // @Inject(REMOVE_SPACES_REGEX)
-    // private readonly removeSpacesRegex: RemoveSpacesRegex,
-    // @Inject(ONLY_LOWERCASE_LETTER_REGEX)
-    // private readonly onlyLowerCaseLettersRegex: OnlyLowerCaseLetterRegex,
-  ) {}
+  constructor(private readonly recadosService: RecadosService) {}
 
   @HttpCode(HttpStatus.OK)
   @Get()
@@ -58,18 +38,7 @@ export class RecadosController {
     @Query() paginationDto: PaginationDto,
     @ReqDataParam('headers') method: string,
   ) {
-    console.log('RecadosController', method);
-    // async findAll(@Query() paginationDto: PaginationDto) {
-    // console.log('RecadosController', req['user']);
-    // console.log(this.removeSpacesRegex.execute('REMOVE OS ESPACOS'));
-    // console.log(
-    //   this.onlyLowerCaseLettersRegex.execute(
-    //     'REMOVE OS ESPACOS letra minuscula',
-    //   ),
-    // );
     const recados = await this.recadosService.findAll(paginationDto);
-    // throw new BadRequestException('MENSAGEM DE ERRO');
-    // findAll() {
     return recados;
   }
 
@@ -78,20 +47,30 @@ export class RecadosController {
   findOne(@Param('id') id: number) {
     return this.recadosService.findOne(id);
   }
-
+  @UseGuards(AuthTokenGuard)
   @Post()
-  create(@Body() createRecadoDto: CreateRecadoDto) {
-    return this.recadosService.create(createRecadoDto);
+  create(
+    @Body() createRecadoDto: CreateRecadoDto,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.recadosService.create(createRecadoDto, tokenPayload);
   }
-
+  @UseGuards(AuthTokenGuard)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateRecadoDto: UpdateRecadoDto) {
-    return this.recadosService.update(id, updateRecadoDto);
+  update(
+    @Param('id') id: number,
+    @Body() updateRecadoDto: UpdateRecadoDto,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.recadosService.update(id, updateRecadoDto, tokenPayload);
   }
-
+  @UseGuards(AuthTokenGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.recadosService.remove(id);
+  remove(
+    @Param('id') id: number,
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+  ) {
+    return this.recadosService.remove(id, tokenPayload);
   }
 }
 

@@ -4,22 +4,23 @@
 GET {{baseUrl}}/recados
 ?limit=2
 &offset=0
-Authorization: Bearer 123456
+
 ### get one
 GET {{baseUrl}}/recados/23
  
 ###
 POST {{baseUrl}}/recados/
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
     "texto": "3 NOVO Recado",
-    "deId": 6,
-    "paraId": 10
+    "paraId": 12
 }
 
 ###
 PATCH  {{baseUrl}}/recados/23
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
     {
@@ -32,6 +33,7 @@ Content-Type: application/json
 
 ###
 DELETE {{baseUrl}}/recados/23
+Authorization: Bearer {{authToken}}
 
 ////////////////////////////////////////////////////////////////
 # PESSOAS
