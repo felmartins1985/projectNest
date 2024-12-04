@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3000
 @authToken={{authenticate.response.body.accessToken}}
+@refreshToken={{authenticate.response.body.refreshToken}}
 ### get all
 GET {{baseUrl}}/recados
 ?limit=2
@@ -80,11 +81,11 @@ Content-Type: application/json
     "email": "em@email.com",
     "password": "123456"
 }
-### APPController GetHello
-# @name AppControllerGetHello
-GET {{baseUrl}}
+### Re-Authenticate
+# @name re-authenticate
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json
 
-### ConceitosAutomaticosController
-# @name ConceitosAutomaticosController
-# 
-GET {{baseUrl}}/conceitos-automatico
+{
+ "refreshToken": "{{refreshToken}}"
+}

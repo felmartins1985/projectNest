@@ -13,7 +13,7 @@ import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.params';
-import { TokenPayloadDto } from 'src/common/dto/token-payload.dto';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 
 @Controller('pessoas')
 export class PessoasController {

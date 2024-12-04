@@ -20,10 +20,9 @@ import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interce
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
-import { ReqDataParam } from 'src/common/params/req-data-param.decorator';
 import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.params';
-import { TokenPayloadDto } from 'src/common/dto/token-payload.dto';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 
 @Controller('recados')
 export class RecadosController {
@@ -34,10 +33,7 @@ export class RecadosController {
   // @UseGuards(IsAdminGuard)
   // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor)
   @UseInterceptors(AddHeaderInterceptor)
-  async findAll(
-    @Query() paginationDto: PaginationDto,
-    @ReqDataParam('headers') method: string,
-  ) {
+  async findAll(@Query() paginationDto: PaginationDto) {
     const recados = await this.recadosService.findAll(paginationDto);
     return recados;
   }

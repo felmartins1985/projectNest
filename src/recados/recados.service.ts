@@ -14,7 +14,7 @@ import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ConfigType } from '@nestjs/config';
 import recadosConfig from './recados.config';
-import { TokenPayloadDto } from 'src/common/dto/token-payload.dto';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class RecadosService {
