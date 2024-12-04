@@ -36,7 +36,9 @@ export class AuthService {
     if (!passwordIsValid) {
       throw new UnauthorizedException('Senha inválida!');
     }
-
+    return this.createTokens(pessoa);
+  }
+  private async createTokens(pessoa: Pessoa) {
     const accessToken = await this.signJWTAsync<Partial<Pessoa>>(
       pessoa.id,
       this.jwtConfiguration.jwtTtl,
@@ -72,5 +74,19 @@ export class AuthService {
     );
   }
 
-  async refreshTokens(refreshTokenDto: RefreshTokenDto) {}
+  async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { sub } = await this.jwtService.verifyAsync(
+        refreshTokenDto.refreshToken,
+        this.jwtConfiguration,
+      );
+      const pessoa = await this.pessoaRepository.findOneBy({ id: sub });
+      if (!pessoa) {
+        throw new Error('Pessoa não encontrada');
+      }
+      return this.createTokens(pessoa);
+    } catch (err) {
+      throw new UnauthorizedException(err.message);
+    }
+  }
 }
