@@ -7,7 +7,7 @@ GET {{baseUrl}}/recados
 &offset=0
 
 ### get one
-GET {{baseUrl}}/recados/23
+GET {{baseUrl}}/recados/28
  
 ###
 POST {{baseUrl}}/recados/
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH  {{baseUrl}}/recados/23
+PATCH  {{baseUrl}}/recados/28
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{baseUrl}}/recados/23
+DELETE {{baseUrl}}/recados/28
 Authorization: Bearer {{authToken}}
 
 ////////////////////////////////////////////////////////////////
@@ -44,7 +44,7 @@ GET {{baseUrl}}/pessoas
 &offset=10
 Authorization: Bearer {{authToken}}
 ### get one
-GET {{baseUrl}}/pessoas/10
+GET {{baseUrl}}/pessoas/21
 Authorization: Bearer {{authToken}}
 ###
 POST {{baseUrl}}/pessoas/
@@ -54,10 +54,9 @@ Content-Type: application/json
    "email": "emmaiil@email.com",
    "password": "123456",
    "nome": "Felipe",
-   "routePolicies": ["createRecado", "findOneRecado"]
 }
 ###
-PATCH  {{baseUrl}}/pessoas/15
+PATCH  {{baseUrl}}/pessoas/23
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
@@ -68,7 +67,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{baseUrl}}/pessoas/20
+DELETE {{baseUrl}}/pessoas/23
 Authorization: Bearer {{authToken}}
 
 ////////////////////////////////////////////////////////////////
