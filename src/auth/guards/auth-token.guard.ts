@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Inject,
+  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -13,6 +14,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Pessoa } from 'src/pessoas/entities/pessoa.entity';
 import { Repository } from 'typeorm';
 
+@Injectable()
 export class AuthTokenGuard implements CanActivate {
   constructor(
     @InjectRepository(Pessoa)
@@ -21,43 +23,47 @@ export class AuthTokenGuard implements CanActivate {
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
+    const request: Request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+
     if (!token) {
-      throw new UnauthorizedException('Não Logado');
+      throw new UnauthorizedException('Não logado!');
     }
+
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: this.jwtConfiguration.secret,
-      });
+      const payload = await this.jwtService.verifyAsync(
+        token,
+        this.jwtConfiguration,
+      );
+
       const pessoa = await this.pessoaRepository.findOneBy({
         id: payload.sub,
         active: true,
       });
+
       if (!pessoa) {
         throw new UnauthorizedException('Pessoa não autorizada');
       }
+
+      payload['pessoa'] = pessoa;
+
       request[REQUEST_TOKEN_PAYLOAD_KEY] = payload;
-      return true;
     } catch (error) {
-      console.error('Erro ao verificar token', error);
       throw new UnauthorizedException(error.message);
     }
+
+    return true;
   }
+
   extractTokenFromHeader(request: Request): string | undefined {
-    const authorization = request.headers.authorization;
+    const authorization = request.headers?.authorization;
+
     if (!authorization || typeof authorization !== 'string') {
       return;
     }
+
     return authorization.split(' ')[1];
   }
 }
-
-// Para que Serve o Guard:
-// Proteção de Rotas: O AuthTokenGuard é usado para proteger rotas,
-// garantindo que apenas solicitações autenticadas com um token JWT válido possam acessar essas rotas.
-// Verificação de Autenticação: Verifica se a solicitação contém um token JWT válido e, se for válido,
-// permite que a solicitação prossiga.
-// Injeção de Dependências: Usa o JwtService para verificar o token JWT e injeta a configuração
-// JWT (jwtConfiguration) para obter o segredo usado na verificação.

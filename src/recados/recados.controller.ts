@@ -19,20 +19,19 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 // import { UrlParam } from 'src/common/params/utl-param.decorator';
-import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.params';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
-import { RoutePolicyGuard } from 'src/auth/guards/route-policy.guard';
+
 import { SetRoutePolicy } from 'src/auth/decorators/set-route-policy.decorator';
 import { RoutePolicies } from 'src/auth/enum/route-policies.enum';
-@UseGuards(RoutePolicyGuard)
+import { AuthAndPolicyGuard } from 'src/auth/guards/auth-and-policy.guard';
+
 @Controller('recados')
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  @SetRoutePolicy(RoutePolicies.findAllRecados)
   async findAll(@Query() paginationDto: PaginationDto) {
     const recados = await this.recadosService.findAll(paginationDto);
     return recados;
@@ -43,7 +42,8 @@ export class RecadosController {
   findOne(@Param('id') id: number) {
     return this.recadosService.findOne(id);
   }
-  @UseGuards(AuthTokenGuard)
+  @SetRoutePolicy(RoutePolicies.createRecado)
+  @UseGuards(AuthAndPolicyGuard)
   @Post()
   create(
     @Body() createRecadoDto: CreateRecadoDto,
@@ -51,7 +51,8 @@ export class RecadosController {
   ) {
     return this.recadosService.create(createRecadoDto, tokenPayload);
   }
-  @UseGuards(AuthTokenGuard)
+  @SetRoutePolicy(RoutePolicies.updateRecado)
+  @UseGuards(AuthAndPolicyGuard)
   @Patch(':id')
   update(
     @Param('id') id: number,
@@ -60,7 +61,8 @@ export class RecadosController {
   ) {
     return this.recadosService.update(id, updateRecadoDto, tokenPayload);
   }
-  @UseGuards(AuthTokenGuard)
+  @SetRoutePolicy(RoutePolicies.deleteRecado)
+  @UseGuards(AuthAndPolicyGuard)
   @Delete(':id')
   remove(
     @Param('id') id: number,

@@ -51,7 +51,7 @@ POST {{baseUrl}}/pessoas/
 Content-Type: application/json
 
 {
-   "email": "emmail@email.com",
+   "email": "emmaiil@email.com",
    "password": "123456",
    "nome": "Felipe",
    "routePolicies": ["createRecado", "findOneRecado"]
@@ -79,7 +79,7 @@ POST {{baseUrl}}/auth
 Content-Type: application/json
 
 {
-    "email": "em2@email.com",
+    "email": "emmaiil@email.com",
     "password": "123456"
 }
 ### Re-Authenticate
