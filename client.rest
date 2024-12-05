@@ -51,9 +51,10 @@ POST {{baseUrl}}/pessoas/
 Content-Type: application/json
 
 {
-   "email": "em2@email.com",
+   "email": "emmail@email.com",
    "password": "123456",
-   "nome": "Felipe"
+   "nome": "Felipe",
+   "routePolicies": ["createRecado", "findOneRecado"]
 }
 ###
 PATCH  {{baseUrl}}/pessoas/15
@@ -67,7 +68,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{baseUrl}}/pessoas/15
+DELETE {{baseUrl}}/pessoas/20
 Authorization: Bearer {{authToken}}
 
 ////////////////////////////////////////////////////////////////
