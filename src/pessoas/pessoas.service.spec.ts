@@ -76,5 +76,13 @@ describe('PessoasService', () => {
         ConflictException,
       );
     });
+    it('shoud return a generic error', async () => {
+      jest
+        .spyOn(pessoaRepository, 'save')
+        .mockRejectedValue(new Error('Erro genérico'));
+      await expect(pessoaService.create({} as any)).rejects.toThrow(
+        new Error('Erro genérico'),
+      );
+    });
   });
 });
