@@ -22,6 +22,7 @@ describe('PessoasService', () => {
             save: jest.fn(),
             create: jest.fn(),
             findOneBy: jest.fn(),
+            find: jest.fn(),
           },
         },
         {
@@ -106,6 +107,26 @@ describe('PessoasService', () => {
       await expect(pessoaService.findOne(pessoaId)).rejects.toThrow(
         new NotFoundException('Pessoa não encontrada'),
       );
+    });
+  });
+  describe('findAll', () => {
+    it('should return all the persons', async () => {
+      const pessoasMock: Pessoa[] = [
+        {
+          id: 1,
+          nome: 'Luiz',
+          email: 'luiz@email.com',
+          passwordHash: '123456',
+        } as Pessoa,
+      ];
+      jest.spyOn(pessoaRepository, 'find').mockResolvedValue(pessoasMock);
+      const result = await pessoaService.findAll();
+      expect(result).toEqual(pessoasMock);
+      expect(pessoaRepository.find).toHaveBeenCalledWith({
+        order: {
+          id: 'DESC',
+        },
+      });
     });
   });
 });
