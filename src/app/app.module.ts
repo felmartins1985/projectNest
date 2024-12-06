@@ -45,3 +45,8 @@ import * as path from 'path';
   exports: [],
 })
 export class AppModule {}
+
+// O ServeStaticModule.forRoot no NestJS é usado para servir arquivos estáticos, como imagens,
+// CSS, JavaScript, etc., diretamente do servidor. Isso é útil quando você deseja
+// disponibilizar arquivos estáticos para os clientes sem precisar configurar um servidor
+// web separado, como o Nginx ou Apache.
