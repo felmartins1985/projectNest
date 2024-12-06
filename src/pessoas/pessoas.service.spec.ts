@@ -5,6 +5,7 @@ import { HashingService } from 'src/auth/hashing/hashing.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
+import { ConflictException } from '@nestjs/common';
 
 describe('PessoasService', () => {
   let pessoaService: PessoasService;
@@ -68,6 +69,12 @@ describe('PessoasService', () => {
       });
       expect(pessoaRepository.save).toHaveBeenCalledWith(novaPessoa);
       expect(result).toEqual(novaPessoa);
+    });
+    it('shoud return a conflict exception whe the email already exists', async () => {
+      jest.spyOn(pessoaRepository, 'save').mockRejectedValue({ code: '23505' });
+      await expect(pessoaService.create({} as any)).rejects.toThrow(
+        ConflictException,
+      );
     });
   });
 });
