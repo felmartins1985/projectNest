@@ -10,8 +10,17 @@ import { GlobalConfigModule } from 'src/global-config/global-config.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 10000, // time to live em ms
+        limit: 10, // máximo de requests durante o ttl
+        blockDuration: 5000, // tempo de bloqueio
+      },
+    ]), // para cada 10 segundos, uma pessoa pode fazer 10 requisicoes, no maximo. Se passar disso, bloqueio por 5 segundos
     ConfigModule.forFeature(globalConfig),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forFeature(globalConfig)],
@@ -41,7 +50,13 @@ import * as path from 'path';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
   exports: [],
 })
 export class AppModule {}
