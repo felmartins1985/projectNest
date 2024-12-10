@@ -15,6 +15,7 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { ConfigType } from '@nestjs/config';
 import recadosConfig from './recados.config';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class RecadosService {
@@ -22,6 +23,7 @@ export class RecadosService {
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
+    private readonly emailService: EmailService,
     @Inject(recadosConfig.KEY)
     private readonly recadosConfiguration: ConfigType<typeof recadosConfig>,
   ) {}
@@ -103,7 +105,11 @@ export class RecadosService {
 
     const recado = await this.recadoRepository.create(novoRecado);
     await this.recadoRepository.save(recado);
-
+    await this.emailService.sendEmail(
+      para.email,
+      `Você recebeu um recado de ${de.nome}`,
+      createRecadoDto.texto,
+    );
     return {
       ...recado,
       de: {
