@@ -124,7 +124,7 @@ Na requisição POST é necessário informar o seguinte JSON:
 <details>
   <summary>💡 Conceitos Importantes sobre o Nest </summary>
   
-  a) Providers: São responsáveis por fazer algo específico, como buscar dados no banco, realizar cálculos ou enviar e-mails, e podem ser reutilizados em várias partes do sistema.  
+  a) Providers: São usasdos para que você não precise instanciar manualmente as classes utilizando new. Ao invés disso, o Nest gerencia a criação e injeção dessas instâncias utilizando o sistema de injeção de dependência.  
   b) Imports: Servem para "trazer" funcionalidades de outras caixas (módulos) para dentro do módulo que você está construindo.  
   c) Exports: Permitem "compartilhar" funcionalidades do seu módulo com outras caixas (módulos).  
   d) Pipes: Pipes são como filtros que verificam ou ajustam os dados que entram no sistema antes de processá-los.  
